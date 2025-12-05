@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { ContentHeader } from './ContentHeader';
 
 const API_BASE = 'https://skillboost.foreach.at/api/public';
 
@@ -16,8 +17,11 @@ export default function SkillBoostTrainer(): JSX.Element {
 	const [loading, setLoading] = useState(false);
 	const [childId] = useState(1);
 
+	const formRef = useRef<HTMLFormElement | null>(null);
 	const answerInputRef = useRef<HTMLInputElement | null>(null);
 	const taskCardRef = useRef<HTMLDivElement | null>(null);
+
+	formRef?.current?.scrollIntoView({ behavior: 'instant' });
 
 	// Skills laden
 	useEffect(() => {
@@ -147,22 +151,18 @@ export default function SkillBoostTrainer(): JSX.Element {
 					margin: '0 auto',
 					backgroundColor: 'white',
 					borderRadius: 24,
-					padding: '1.5rem 1.25rem 1.25rem',
+					padding: '1rem',
 					boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-					fontFamily:
-						'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
 					display: 'flex',
 					flexDirection: 'column',
 					gap: '1rem'
 				}}
 			>
-				{/* Header + Auswahl bleibt oben, der Aufgabenbereich scrollt mit */}
-				<div>
-					<h1 style={{ margin: 0, fontSize: '1.5rem' }}>🧠 SkillBoost</h1>
-					<div style={{ fontSize: '0.9rem', color: '#777' }}>
-						Spielerisch rechnen lernen ✨
-					</div>
-				</div>
+				<ContentHeader
+					label="SkillBoost"
+					icon="🧠"
+					subtitle="Spielerisch rechnen lernen ✨"
+				/>
 
 				{/* Einstellungen */}
 				<div
@@ -288,7 +288,7 @@ export default function SkillBoostTrainer(): JSX.Element {
 						</div>
 
 						{/* Eingabe */}
-						<form onSubmit={handleSubmitAnswer}>
+						<form onSubmit={handleSubmitAnswer} ref={formRef}>
 							<input
 								ref={answerInputRef}
 								type="tel"
@@ -333,18 +333,21 @@ export default function SkillBoostTrainer(): JSX.Element {
 							</button>
 						</form>
 
-						{/* Feedback */}
 						{feedback && (
 							<div
 								style={{
-									marginTop: '0.9rem',
+									// marginTop: '0.9rem',
 									padding: '0.5rem 0.6rem',
 									borderRadius: 12,
 									textAlign: 'center',
 									backgroundColor: feedback.correct ? '#dcfce7' : '#fee2e2',
 									color: feedback.correct ? '#166534' : '#b91c1c',
+									border: `2px solid ${feedback.correct ? 'green' : 'red'}`,
 									fontWeight: 600,
-									fontSize: '0.95rem'
+									fontSize: '0.95rem',
+									position: 'absolute',
+									inset: '1rem',
+									bottom: 'auto'
 								}}
 							>
 								{feedback.correct ? (

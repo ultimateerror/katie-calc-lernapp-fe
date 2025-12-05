@@ -25,4 +25,8 @@ main {
 	flex: 1 1 0px;
 	overflow-y: auto;
 	background: linear-gradient(135deg, #ffe7ba 0%, #fffbf0 40%, #c8e7ff 100%);
+
+	&:has(.stats) {
+		background: linear-gradient(135deg, #e0f2fe 0%, #faf5ff 50%, #fee2e2 100%);
+	}
 }
