@@ -5,13 +5,12 @@ import { useAppContext } from './AppContext';
 const API_BASE = 'https://skillboost.foreach.at/api/public';
 
 export default function SkillBoostStats(): JSX.Element {
-	const [childId] = useState(1); // später auswählbar
 	const [skill, setSkill] = useState('MUL_TABLE');
 	const [skills, setSkills] = useState<any[]>([]);
 	const [stats, setStats] = useState<any | null>(null);
 	const [loading, setLoading] = useState(false);
 
-	const { userId } = useAppContext();
+	const { childId } = useAppContext();
 
 	// Skills laden (damit du theoretisch auch Add/Sub anzeigen kannst)
 	useEffect(() => {
@@ -28,7 +27,7 @@ export default function SkillBoostStats(): JSX.Element {
 			const res = await fetch(
 				`${API_BASE}/stats?childId=${childId}&skill=${encodeURIComponent(
 					skill
-				)}&userId=${userId}`
+				)}`
 			);
 			const data = await res.json();
 			setStats(data);

@@ -6,31 +6,31 @@ import {
 	useState
 } from 'react';
 
-const AppContext = createContext<{ userId: string } | null>(null);
+const AppContext = createContext<{ childId: string } | null>(null);
 
 export function AppContextProvider({ children }: { children: ReactNode }) {
-	const [userId, setUserId] = useState<string>(crypto.randomUUID());
+	const [childId, setChildId] = useState<string>(crypto.randomUUID());
 
 	useEffect(() => {
-		const storedId = localStorage.getItem('userId');
+		const storedId = localStorage.getItem('childId');
 
 		if (!storedId) {
-			localStorage.setItem('userId', userId);
+			localStorage.setItem('childId', childId);
 			return;
 		}
 
-		setUserId(storedId);
+		setChildId(storedId);
 	}, []);
 
 	return (
-		<AppContext.Provider value={{ userId }}>{children}</AppContext.Provider>
+		<AppContext.Provider value={{ childId }}>{children}</AppContext.Provider>
 	);
 }
 
 export function useAppContext() {
 	const context = useContext(AppContext);
 
-	if (!context?.userId) {
+	if (!context?.childId) {
 		throw new Error('AppContext was not registered correctly.');
 	}
 

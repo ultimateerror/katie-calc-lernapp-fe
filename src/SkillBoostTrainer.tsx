@@ -16,7 +16,6 @@ export default function SkillBoostTrainer(): JSX.Element {
 	const [answer, setAnswer] = useState('');
 	const [feedback, setFeedback] = useState<any | null>(null);
 	const [loading, setLoading] = useState(false);
-	const [childId] = useState(1);
 
 	const formRef = useRef<HTMLFormElement | null>(null);
 	const answerInputRef = useRef<HTMLInputElement | null>(null);
@@ -24,7 +23,7 @@ export default function SkillBoostTrainer(): JSX.Element {
 
 	formRef?.current?.scrollIntoView({ behavior: 'instant' });
 
-	const { userId } = useAppContext();
+	const { childId } = useAppContext();
 
 	// Skills laden
 	useEffect(() => {
@@ -108,8 +107,7 @@ export default function SkillBoostTrainer(): JSX.Element {
 			exerciseId: currentExercise.id,
 			payload,
 			givenAnswer: givenNumber,
-			responseTimeMs: 0,
-			userId
+			responseTimeMs: 0
 		};
 
 		try {
