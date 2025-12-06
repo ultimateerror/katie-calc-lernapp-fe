@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ContentHeader } from './ContentHeader';
+import { useAppContext } from './AppContext';
 
 const API_BASE = 'https://skillboost.foreach.at/api/public';
 
@@ -9,6 +10,8 @@ export default function SkillBoostStats(): JSX.Element {
 	const [skills, setSkills] = useState<any[]>([]);
 	const [stats, setStats] = useState<any | null>(null);
 	const [loading, setLoading] = useState(false);
+
+	const { userId } = useAppContext();
 
 	// Skills laden (damit du theoretisch auch Add/Sub anzeigen kannst)
 	useEffect(() => {
@@ -25,7 +28,7 @@ export default function SkillBoostStats(): JSX.Element {
 			const res = await fetch(
 				`${API_BASE}/stats?childId=${childId}&skill=${encodeURIComponent(
 					skill
-				)}`
+				)}&userId=${userId}`
 			);
 			const data = await res.json();
 			setStats(data);

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ContentHeader } from './ContentHeader';
+import { useAppContext } from './AppContext';
 
 const API_BASE = 'https://skillboost.foreach.at/api/public';
 
@@ -22,6 +23,8 @@ export default function SkillBoostTrainer(): JSX.Element {
 	const taskCardRef = useRef<HTMLDivElement | null>(null);
 
 	formRef?.current?.scrollIntoView({ behavior: 'instant' });
+
+	const { userId } = useAppContext();
 
 	// Skills laden
 	useEffect(() => {
@@ -105,7 +108,8 @@ export default function SkillBoostTrainer(): JSX.Element {
 			exerciseId: currentExercise.id,
 			payload,
 			givenAnswer: givenNumber,
-			responseTimeMs: 0
+			responseTimeMs: 0,
+			userId
 		};
 
 		try {
